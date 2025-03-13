@@ -2,6 +2,7 @@ import Hero from "@/components/hero";
 import AffiliateNetwork from "@/components/affiliate-network";
 import HowItWorks from "@/components/how-it-works";
 import InteractiveDemo from "@/components/interactive-demo";
+import CoreBenefits from "@/components/core-benefits";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Hero />
       <main className="container mx-auto px-4 py-8 space-y-24">
         <AffiliateNetwork />
+        <CoreBenefits />
         <HowItWorks />
         <InteractiveDemo />
       </main>
