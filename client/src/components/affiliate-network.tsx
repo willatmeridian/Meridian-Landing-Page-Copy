@@ -8,7 +8,7 @@ export default function AffiliateNetwork() {
           Our Nationwide Network
         </h2>
         <p className="text-lg text-gray-600">
-          Tap into our network of 2900+ partners for unbeatable pricing and reliability
+          Tap into Meridian's network of 2900+ partners for unbeatable pricing and reliability
         </p>
       </div>
 
