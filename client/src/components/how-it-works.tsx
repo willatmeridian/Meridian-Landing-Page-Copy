@@ -33,9 +33,9 @@ export default function HowItWorks() {
 
       <div className="grid md:grid-cols-3 gap-8">
         {steps.map((step, index) => (
-          <Card key={index} className="p-6 text-center">
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 mb-4">
-              <step.icon className="h-6 w-6 text-primary" />
+          <Card key={index} className="p-6 text-center card-hover">
+            <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 mb-4 icon-hover">
+              <step.icon className="h-6 w-6 text-primary transition-colors duration-200" />
             </div>
             <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
             <p className="text-gray-600">{step.description}</p>

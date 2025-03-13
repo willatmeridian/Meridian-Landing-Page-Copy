@@ -9,18 +9,20 @@ export default function Hero() {
           <img 
             src="/meridian-logo.png"
             alt="Meridian Logo" 
-            className="h-16 mb-8"
+            className="h-16 mb-8 transition-opacity duration-300 hover:opacity-90"
           />
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 transition-transform duration-300 hover:translate-x-2">
             Streamline Your Supply Chain with{" "}
             <span className="text-cta">Meridian</span>
           </h1>
           <p className="text-xl text-neutral mb-8">
             Reduce procurement costs and ensure dependable supply chains with our outsourced procurement service.
           </p>
-          <Button className="h-12 px-6 text-lg bg-cta hover:bg-cta-light text-navy" 
-            onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })}>
-            Try Demo <ArrowRight className="ml-2" />
+          <Button 
+            className="h-12 px-6 text-lg bg-cta hover:bg-cta-light text-navy button-hover"
+            onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Try Demo <ArrowRight className="ml-2 transition-transform duration-200 group-hover:translate-x-1" />
           </Button>
         </div>
       </div>

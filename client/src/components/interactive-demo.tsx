@@ -32,15 +32,15 @@ export default function InteractiveDemo() {
         </p>
       </div>
 
-      <Card className="bg-white p-8">
+      <Card className="bg-white p-8 transition-all duration-300 hover:shadow-xl">
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-6">
-            <div className="p-4 bg-gray-50 rounded-lg">
+            <div className="p-4 bg-gray-50 rounded-lg transition-colors duration-200 hover:bg-gray-100">
               <h3 className="font-semibold mb-2">Recent Activity</h3>
               <p className="text-gray-600">Last 6 months: 500 pallets purchased</p>
             </div>
 
-            <div className="p-4 bg-gray-50 rounded-lg">
+            <div className="p-4 bg-gray-50 rounded-lg transition-colors duration-200 hover:bg-gray-100">
               <h3 className="font-semibold mb-2">Active Orders</h3>
               <p className="text-gray-600">2 orders in progress</p>
             </div>
@@ -48,21 +48,21 @@ export default function InteractiveDemo() {
 
           <div className="space-y-4">
             <Button 
-              className="w-full h-12" 
+              className="w-full h-12 button-hover" 
               disabled={loading}
               onClick={() => handleAction("buy")}
             >
-              <Package className="mr-2 h-5 w-5" />
+              <Package className="mr-2 h-5 w-5 icon-hover" />
               Buy Pallets
             </Button>
 
             <Button 
-              className="w-full h-12" 
+              className="w-full h-12 button-hover" 
               variant="outline"
               disabled={loading}
               onClick={() => handleAction("swap")}
             >
-              <RefreshCw className="mr-2 h-5 w-5" />
+              <RefreshCw className="mr-2 h-5 w-5 icon-hover" />
               Request Trailer Swap
             </Button>
           </div>
