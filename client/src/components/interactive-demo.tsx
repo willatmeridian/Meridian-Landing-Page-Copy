@@ -14,12 +14,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-// Sample data for the volume chart
+// Sample data for the volume chart with correct pallet categories
 const volumeData = [
-  { name: 'Standard', volume: 450 },
-  { name: 'Heavy Duty', volume: 280 },
+  { name: '4840 Grade A', volume: 450 },
+  { name: '4840 Grade B', volume: 280 },
   { name: 'Custom', volume: 170 },
-  { name: 'Euro', volume: 120 },
+  { name: '42x42', volume: 120 },
+  { name: '48x40 GMA HT', volume: 200 },
 ];
 
 // Sample locations
@@ -35,11 +36,11 @@ export default function InteractiveDemo() {
   const [timeframe, setTimeframe] = useState('weekly');
   const [selectedLocation, setSelectedLocation] = useState('1');
   const [orderForm, setOrderForm] = useState({
-    type: 'standard',
+    type: '4840-grade-a',
     length: '',
     width: '',
     height: '',
-    quantity: ''
+    monthlyQuantity: ''
   });
 
   const handleOrderSubmit = () => {
@@ -48,7 +49,7 @@ export default function InteractiveDemo() {
       setLoading(false);
       toast({
         title: "Order Submitted!",
-        description: `Quote request for ${orderForm.quantity} ${orderForm.type} pallets has been sent.`,
+        description: `Quote request for ${orderForm.monthlyQuantity} ${orderForm.type} pallets per month has been sent.`,
       });
     }, 1000);
   };
@@ -79,10 +80,11 @@ export default function InteractiveDemo() {
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="standard">Standard</SelectItem>
-                  <SelectItem value="heavy">Heavy Duty</SelectItem>
-                  <SelectItem value="euro">Euro</SelectItem>
+                  <SelectItem value="4840-grade-a">4840 Grade A</SelectItem>
+                  <SelectItem value="4840-grade-b">4840 Grade B</SelectItem>
                   <SelectItem value="custom">Custom</SelectItem>
+                  <SelectItem value="42x42">42x42</SelectItem>
+                  <SelectItem value="48x40-gma-ht">48x40 GMA Heat Treated</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -116,11 +118,11 @@ export default function InteractiveDemo() {
                 />
               </div>
               <div>
-                <Label>Quantity</Label>
+                <Label>Monthly Quantity</Label>
                 <Input 
                   type="number"
-                  value={orderForm.quantity}
-                  onChange={(e) => setOrderForm({...orderForm, quantity: e.target.value})}
+                  value={orderForm.monthlyQuantity}
+                  onChange={(e) => setOrderForm({...orderForm, monthlyQuantity: e.target.value})}
                 />
               </div>
             </div>
@@ -138,11 +140,11 @@ export default function InteractiveDemo() {
 
         {/* Analytics Dashboard */}
         <Card className="p-6 transition-all duration-300 hover:shadow-xl">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
             <h3 className="text-xl font-semibold">Volume Analytics</h3>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <Select value={timeframe} onValueChange={setTimeframe}>
-                <SelectTrigger className="w-[120px]">
+                <SelectTrigger className="w-full sm:w-[120px]">
                   <Calendar className="mr-2 h-4 w-4" />
                   <SelectValue />
                 </SelectTrigger>
@@ -154,7 +156,7 @@ export default function InteractiveDemo() {
               </Select>
 
               <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px]">
                   <MapPin className="mr-2 h-4 w-4" />
                   <SelectValue />
                 </SelectTrigger>
@@ -173,7 +175,7 @@ export default function InteractiveDemo() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={volumeData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} />
                 <YAxis />
                 <Tooltip />
                 <Bar dataKey="volume" fill="#415a77" />
@@ -185,7 +187,7 @@ export default function InteractiveDemo() {
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-sm text-gray-600">Total Monthly Volume</p>
-                <p className="text-2xl font-bold text-primary">1,020 Pallets</p>
+                <p className="text-2xl font-bold text-primary">1,220 Pallets</p>
               </div>
               <div className="text-right">
                 <p className="text-sm text-gray-600">Cost Savings</p>

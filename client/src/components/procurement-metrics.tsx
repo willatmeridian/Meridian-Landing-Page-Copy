@@ -14,6 +14,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
+// Market trend data showing pallet price changes
 const marketTrendData = [
   { month: 'Jan', price: 100 },
   { month: 'Feb', price: 95 },
@@ -23,12 +24,14 @@ const marketTrendData = [
   { month: 'Jun', price: 20 },
 ];
 
+// Cost comparison data for different pallet types
 const savingsData = [
   { category: 'Pallets', baseline: 100, optimized: 50 },
   { category: 'Packaging', baseline: 100, optimized: 65 },
   { category: 'Logistics', baseline: 100, optimized: 55 },
 ];
 
+// Vendor performance metrics
 const vendorMetrics = [
   { name: 'Quality', score: 95 },
   { name: 'Delivery', score: 92 },
