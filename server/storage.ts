@@ -1,11 +1,7 @@
 import { users, type User, type InsertUser } from "@shared/schema";
 
-// modify the interface with any CRUD methods
-// you might need
-
 // Simple address type for the CSV data
-export type Address = {
-  id: number;
+export interface Address {
   name: string;
   address: string;
   city: string;
@@ -13,30 +9,22 @@ export type Address = {
   zip: string;
   lat: number;
   lng: number;
-};
+}
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  
   // Address-related methods
   getAddresses(): Promise<Address[]>;
-  addAddress(address: Omit<Address, "id">): Promise<Address>;
+  addAddress(address: Address): Promise<void>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private addresses: Map<number, Address>;
-  currentId: number;
-  currentAddressId: number;
-
-  constructor() {
-    this.users = new Map();
-    this.addresses = new Map();
-    this.currentId = 1;
-    this.currentAddressId = 1;
-  }
+// Simple in-memory storage for addresses
+class Storage implements IStorage {
+  private addresses: Address[] = [];
+  private users: Map<number, User> = new Map();
+  private currentId: number = 1;
 
   async getUser(id: number): Promise<User | undefined> {
     return this.users.get(id);
@@ -56,15 +44,12 @@ export class MemStorage implements IStorage {
   }
 
   async getAddresses(): Promise<Address[]> {
-    return Array.from(this.addresses.values());
+    return this.addresses;
   }
 
-  async addAddress(address: Omit<Address, "id">): Promise<Address> {
-    const id = this.currentAddressId++;
-    const newAddress: Address = { ...address, id };
-    this.addresses.set(id, newAddress);
-    return newAddress;
+  async addAddress(address: Address): Promise<void> {
+    this.addresses.push(address);
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new Storage();
