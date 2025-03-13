@@ -1,6 +1,9 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import * as fs from 'fs';
+import * as csvParser from 'csv-parser';
+
 
 const app = express();
 app.use(express.json());
@@ -35,6 +38,24 @@ app.use((req, res, next) => {
 
   next();
 });
+
+
+//New API endpoint to serve address data
+app.get('/api/addresses', async (req, res) => {
+  try {
+    const addresses = [];
+    fs.createReadStream('./addresses.csv')
+      .pipe(csvParser())
+      .on('data', (data) => addresses.push(data))
+      .on('end', () => {
+        res.json(addresses);
+      });
+  } catch (error) {
+    console.error("Error reading addresses CSV:", error);
+    res.status(500).send("Error reading address data");
+  }
+});
+
 
 (async () => {
   const server = await registerRoutes(app);
