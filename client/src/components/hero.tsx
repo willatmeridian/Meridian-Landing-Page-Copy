@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="flex flex-col items-start max-w-3xl">
           <img 
-            src="./attached_assets/Meridian Logo six.png"
+            src="/assets/meridian-logo.png"
             alt="Meridian Logo" 
             className="h-16 mb-8"
           />
