@@ -1,5 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { TrendingUp, ShieldCheck, Truck } from "lucide-react";
+import { useEffect, useState } from 'react';
+import Map from './map';
 
 const benefits = [
   {
@@ -19,7 +21,32 @@ const benefits = [
   }
 ];
 
+interface Location {
+  latitude: number;
+  longitude: number;
+  name?: string;
+}
+
 export default function AffiliateNetwork() {
+  const [locations, setLocations] = useState<Location[]>([]);
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await fetch('/api/locations');
+        if (!response.ok) {
+          throw new Error('Failed to fetch locations');
+        }
+        const data = await response.json();
+        console.log('Loaded locations:', data.length);
+        setLocations(data);
+      } catch (error) {
+        console.error('Error loading locations:', error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
   return (
     <section id="network" className="py-12">
       <div className="text-center mb-12">
@@ -32,11 +59,8 @@ export default function AffiliateNetwork() {
       </div>
 
       <Card className="bg-white p-8">
-        <div className="relative w-full aspect-[3/2] bg-gray-100 rounded-lg flex items-center justify-center mb-8">
-          <div className="text-center">
-            <p className="text-2xl font-semibold text-gray-400">U.S. Map</p>
-            <p className="text-gray-400">Coming Soon</p>
-          </div>
+        <div className="relative w-full aspect-[3/2] bg-gray-100 rounded-lg overflow-hidden mb-8">
+          {typeof window !== 'undefined' ? <Map /> : null}
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
