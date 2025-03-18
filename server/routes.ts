@@ -21,7 +21,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // API route to get all locations
   app.get("/api/locations", async (req, res) => {
     try {
-      const csvPath = path.join(__dirname, '..', 'attached_assets', 'Pallet Leads USA All - enhanced (1).csv');
+      const csvPath = path.join(process.cwd(), 'attached_assets', 'Pallet Leads USA All - enhanced (1).csv');
       console.log('Looking for CSV file at:', csvPath);
       
       if (!fs.existsSync(csvPath)) {
@@ -68,13 +68,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
             latitude !== 0 && longitude !== 0 && 
             latitude >= 25 && latitude <= 50 && // Continental US bounds
             longitude >= -125 && longitude <= -65) {
-          locations.push({
-            latitude,
-            longitude,
-            name: name || 'Unknown',
-            city: city || 'Unknown',
-            state: state || 'Unknown'
-          });
+          const matchStatus = (fields[27] || '').trim();
+          const verified = String(fields[28] || '').toLowerCase() === 'true';
+          const rating = parseFloat(fields[21]) || null;
+          const reviewCount = parseInt(fields[22]) || null;
+          const website = fields[20] || null;
+          const address = fields[9] || null;
+          const zip = fields[13] || null;
+
+          // Debug logging to see what's happening with matchStatus
+          if (i < 10 || i % 1000 === 0) {
+            console.log(`Row ${i}: matchStatus='${matchStatus}', responsive=${req.query.responsive}`);
+          }
+
+          // Added responsive filter: if the 'responsive' query parameter is 'true' and matchStatus is NOT 'No Company Match', keep the row
+          if (req.query.responsive === 'true') {
+            if (matchStatus !== "No Company Match") {
+              locations.push({
+                latitude,
+                longitude,
+                name: name || 'Unknown',
+                city: city || 'Unknown',
+                state: state || 'Unknown',
+                address,
+                zip,
+                rating,
+                reviewCount,
+                website,
+                matchStatus,
+                verified
+              });
+            }
+          } else {
+            // If responsive filter is not enabled, include all rows
+            locations.push({
+              latitude,
+              longitude,
+              name: name || 'Unknown',
+              city: city || 'Unknown',
+              state: state || 'Unknown',
+              address,
+              zip,
+              rating,
+              reviewCount,
+              website,
+              matchStatus,
+              verified
+            });
+          }
         }
       }
 
