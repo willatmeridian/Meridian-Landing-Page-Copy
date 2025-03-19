@@ -1,0 +1,60 @@
+Meridian Product Requirements Document (PRD)
+Date: March 13, 2025
+File: meridian_prd.txt
+
+Overview
+- This PRD outlines the requirements for "Meridian," a landing page designed to showcase Viridian's outsourced procurement services for business customers.
+
+1. Objective
+- Goal: Showcase Viridian's outsourced procurement service, emphasizing cost savings and reliability for business customers.
+- Focus: Highlight how the service reduces procurement costs and ensures dependable supply chains.
+
+2. Features
+2.1 Affiliate Network Section
+- Purpose: Highlight Viridian’s network of 2900 pallet companies and cardboard services.
+- Visual: Include a U.S. map showing geographic reach of the affiliate network.
+- Key Message: Emphasize cost savings achieved by leveraging group spend across key markets.
+- Content: Brief text (e.g., "Tap into our network of 2900+ partners for unbeatable pricing and reliability").
+
+2.2 How It Works Section
+- Purpose: Explain the procurement process in three clear steps.
+- Steps:
+  - Step 1: Scout vendors near the customer’s location for optimal proximity and pricing.
+  - Step 2: Secure backup vendors for emergencies (e.g., tornadoes disrupting a pallet vendor).
+  - Step 3: Negotiate vendor bids to align with customer payment terms.
+- Design Suggestion: Use a simple 3-step flow graphic or bullet points for clarity.
+
+2.3 Interactive Demo
+- Purpose: Provide a mock portal to simulate the procurement experience (not fully functional).
+- Content:
+  - Display sample materials (e.g., pallets).
+  - Show summaries of historical buying patterns (e.g., "Last 6 months: 500 pallets purchased").
+  - Include clickable options: "Buy Pallets" and "Request Trailer Swaps" (for cardboard or pallets).
+- Interactivity: Clicking options triggers fake alerts or pop-ups (e.g., "Order submitted!" or "Swap request sent!").
+- Design: Dashboard-like layout with a clean, professional feel.
+
+3. Tech Notes (For Replit Development)
+3.1 HTML
+- Structure:
+  - Section 1: Affiliate Network (with placeholder for U.S. map).
+  - Section 2: How It Works (3-step process).
+  - Section 3: Interactive Demo (mock portal layout).
+- Use semantic HTML (e.g., <section>, <header>, <main>) for clarity.
+
+3.2 CSS
+- Styling Goals:
+  - Clean, professional look with a modern aesthetic.
+  - U.S. map placeholder: Styled as a rectangular box (e.g., 600px x 400px) with a "Map Coming Soon" label.
+  - Demo: Dashboard-like feel with borders, padding, and hover effects on buttons.
+- Suggested Colors: Neutral palette (e.g., white, gray, blue accents).
+
+3.3 JavaScript
+- Interactivity for Demo:
+  - Add event listeners to "Buy Pallets" and "Request Trailer Swaps" buttons.
+  - Trigger fake responses (e.g., alert("Order submitted!") or alert("Swap request sent!")).
+- Keep it simple: No backend or persistent state required.
+
+Development Guidelines
+- Target: Build a functional prototype in a 90-minute development session.
+- Focus: Prioritize layout and interactivity over complex animations or backend logic.
+- Deliverable: A single HTML file with embedded CSS and JavaScript, uploadable to Replit.

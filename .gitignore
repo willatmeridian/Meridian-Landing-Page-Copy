@@ -19,3 +19,12 @@ public/
 # OS
 .DS_Store
 Thumbs.db
+Thumbs.db
+=======
+node_modules
+dist
+.DS_Store
+server/public
+vite.config.ts.*
+*.tar.gz
+>>>>>>> 5a52636db1d7c7eafade8d700c409d07db251581
