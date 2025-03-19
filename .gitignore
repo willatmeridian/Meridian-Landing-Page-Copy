@@ -1,0 +1,21 @@
+# Firebase
+.firebase/
+.firebaserc
+
+# Dependencies
+node_modules/
+
+# Build
+public/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
