@@ -59,7 +59,9 @@ export default function AffiliateNetwork() {
       </div>
 
       <Card className="bg-white p-8">
-        
+        <div className="relative w-full aspect-[3/2] bg-gray-100 rounded-lg overflow-hidden mb-8">
+          {typeof window !== 'undefined' ? <Map /> : null}
+        </div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {benefits.map((benefit, index) => (

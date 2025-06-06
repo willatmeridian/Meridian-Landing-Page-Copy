@@ -47,75 +47,72 @@ export default function ProcurementMetrics() {
   }, []);
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Procurement Analytics
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Track your savings and optimize your procurement strategy with real-time data
-          </p>
-        </div>
+    <section id="metrics" className="py-12">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          Real-Time Procurement Insights
+        </h2>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Track market trends, cost savings, and vendor performance with our advanced analytics
+        </p>
+      </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          {/* Market Trend Chart */}
-          <Card className="p-6">
-            <h3 className="text-xl font-semibold mb-4">Market Price Trends</h3>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={marketTrendData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line 
-                    type="monotone" 
-                    dataKey="price" 
-                    stroke="#2563eb" 
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </Card>
-
-          {/* Cost Savings Chart */}
-          <Card className="p-6">
-            <h3 className="text-xl font-semibold mb-4">Cost Optimization</h3>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={savingsData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="category" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="baseline" fill="#ef4444" name="Baseline Cost" />
-                  <Bar dataKey="optimized" fill="#22c55e" name="Optimized Cost" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </Card>
-        </div>
-
-        {/* Vendor Performance */}
-        <Card className="p-6">
-          <h3 className="text-xl font-semibold mb-4">Vendor Performance Metrics</h3>
-          <div className="h-64">
+      <div className="grid md:grid-cols-2 gap-8">
+        <Card className={`p-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <h3 className="text-xl font-semibold mb-4">Market Price Trends</h3>
+          <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={vendorMetrics}>
+              <AreaChart data={marketTrendData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Area 
+                  type="monotone" 
+                  dataKey="price" 
+                  stroke="#415a77" 
+                  fill="#778da9" 
+                  animationDuration={2000}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
+
+        <Card className={`p-6 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <h3 className="text-xl font-semibold mb-4">Cost Optimization</h3>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={savingsData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="category" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="baseline" fill="#1b263b" animationDuration={1500} />
+                <Bar dataKey="optimized" fill="#e1c16e" animationDuration={1500} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
+
+        <Card className={`p-6 md:col-span-2 transition-all duration-1000 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <h3 className="text-xl font-semibold mb-4">Vendor Performance Metrics</h3>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={vendorMetrics}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis domain={[0, 100]} />
                 <Tooltip />
-                <Area 
+                <Line 
                   type="monotone" 
                   dataKey="score" 
-                  stroke="#2563eb" 
-                  fill="#2563eb" 
-                  fillOpacity={0.3}
+                  stroke="#415a77" 
+                  strokeWidth={2}
+                  dot={{ fill: '#e1c16e' }}
+                  animationDuration={2000}
                 />
-              </AreaChart>
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </Card>

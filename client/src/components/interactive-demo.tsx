@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Package, RefreshCw, TrendingDown, FileText, Truck, Calendar, MapPin, BarChart4 } from "lucide-react";
+import { Package, RefreshCw, TrendingDown, FileText, Truck, Calendar, MapPin } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -55,159 +55,152 @@ export default function InteractiveDemo() {
   };
 
   return (
-    <section id="demo" className="py-12 bg-gray-50">
+    <section id="demo" className="py-12">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold text-gray-900 mb-4">
-          Interactive Demo Portal
+          Experience Our Procurement Portal
         </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Experience our procurement platform with real-time data and ordering capabilities
+        <p className="text-lg text-gray-600">
+          Try our streamlined ordering system and analytics dashboard
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
-        {/* Volume Analytics */}
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-semibold flex items-center gap-2">
-              <BarChart4 className="h-5 w-5" />
-              Volume Analytics
-            </h3>
-            <Select value={timeframe} onValueChange={setTimeframe}>
-              <SelectTrigger className="w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="daily">Daily</SelectItem>
-                <SelectItem value="weekly">Weekly</SelectItem>
-                <SelectItem value="monthly">Monthly</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div className="h-64 mb-4">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={volumeData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="volume" fill="#2563eb" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Order Form */}
+        <Card className="p-6 transition-all duration-300 hover:shadow-xl">
+          <h3 className="text-xl font-semibold mb-6">Request Pallet Quote</h3>
+          <div className="space-y-4">
+            <div>
+              <Label>Pallet Type</Label>
+              <Select 
+                defaultValue={orderForm.type}
+                onValueChange={(value) => setOrderForm({...orderForm, type: value})}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="4840-grade-a">4840 Grade A</SelectItem>
+                  <SelectItem value="4840-grade-b">4840 Grade B</SelectItem>
+                  <SelectItem value="custom">Custom</SelectItem>
+                  <SelectItem value="42x42">42x42</SelectItem>
+                  <SelectItem value="48x40-gma-ht">48x40 GMA Heat Treated</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="p-3 bg-blue-50 rounded">
-              <TrendingDown className="h-5 w-5 text-green-600 mx-auto mb-1" />
-              <p className="text-sm font-medium">Cost Down 35%</p>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Length (inches)</Label>
+                <Input 
+                  type="number" 
+                  value={orderForm.length}
+                  onChange={(e) => setOrderForm({...orderForm, length: e.target.value})}
+                />
+              </div>
+              <div>
+                <Label>Width (inches)</Label>
+                <Input 
+                  type="number"
+                  value={orderForm.width}
+                  onChange={(e) => setOrderForm({...orderForm, width: e.target.value})}
+                />
+              </div>
             </div>
-            <div className="p-3 bg-green-50 rounded">
-              <Truck className="h-5 w-5 text-blue-600 mx-auto mb-1" />
-              <p className="text-sm font-medium">On-Time 98%</p>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Height (inches)</Label>
+                <Input 
+                  type="number"
+                  value={orderForm.height}
+                  onChange={(e) => setOrderForm({...orderForm, height: e.target.value})}
+                />
+              </div>
+              <div>
+                <Label>Monthly Quantity</Label>
+                <Input 
+                  type="number"
+                  value={orderForm.monthlyQuantity}
+                  onChange={(e) => setOrderForm({...orderForm, monthlyQuantity: e.target.value})}
+                />
+              </div>
             </div>
-            <div className="p-3 bg-yellow-50 rounded">
-              <Calendar className="h-5 w-5 text-orange-600 mx-auto mb-1" />
-              <p className="text-sm font-medium">Lead Time 3d</p>
-            </div>
+
+            <Button 
+              className="w-full button-hover" 
+              disabled={loading}
+              onClick={handleOrderSubmit}
+            >
+              <Package className="mr-2 h-5 w-5 icon-hover" />
+              Submit Quote Request
+            </Button>
           </div>
         </Card>
 
-        {/* Order Form */}
-        <Card className="p-6">
-          <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
-            <Package className="h-5 w-5" />
-            Request Quote
-          </h3>
-          
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="location">Delivery Location</Label>
+        {/* Analytics Dashboard */}
+        <Card className="p-6 transition-all duration-300 hover:shadow-xl">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+            <h3 className="text-xl font-semibold">Volume Analytics</h3>
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <Select value={timeframe} onValueChange={setTimeframe}>
+                <SelectTrigger className="w-full sm:w-[120px]">
+                  <Calendar className="mr-2 h-4 w-4" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="daily">Daily</SelectItem>
+                  <SelectItem value="weekly">Weekly</SelectItem>
+                  <SelectItem value="monthly">Monthly</SelectItem>
+                </SelectContent>
+              </Select>
+
               <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full sm:w-[180px]">
+                  <MapPin className="mr-2 h-4 w-4" />
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {locations.map(location => (
                     <SelectItem key={location.id} value={location.id.toString()}>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4" />
-                        {location.name}
-                      </div>
+                      {location.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
+          </div>
 
-            <div>
-              <Label htmlFor="type">Pallet Type</Label>
-              <Select value={orderForm.type} onValueChange={(value) => setOrderForm({...orderForm, type: value})}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="4840-grade-a">4840 Grade A</SelectItem>
-                  <SelectItem value="4840-grade-b">4840 Grade B</SelectItem>
-                  <SelectItem value="custom">Custom Size</SelectItem>
-                  <SelectItem value="42x42">42x42</SelectItem>
-                  <SelectItem value="48x40-gma-ht">48x40 GMA HT</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={volumeData} margin={{ top: 20, right: 30, left: 20, bottom: 100 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="name" 
+                  angle={-45} 
+                  textAnchor="end" 
+                  height={80} 
+                  interval={0}
+                  tick={{ fontSize: 12 }}
+                />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="volume" fill="#415a77" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
 
-            <div className="grid grid-cols-3 gap-2">
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+            <div className="flex justify-between items-center">
               <div>
-                <Label htmlFor="length">Length (in)</Label>
-                <Input
-                  id="length"
-                  value={orderForm.length}
-                  onChange={(e) => setOrderForm({...orderForm, length: e.target.value})}
-                  placeholder="48"
-                />
+                <p className="text-sm text-gray-600">Total Monthly Volume</p>
+                <p className="text-2xl font-bold text-primary">1,220 Pallets</p>
               </div>
-              <div>
-                <Label htmlFor="width">Width (in)</Label>
-                <Input
-                  id="width"
-                  value={orderForm.width}
-                  onChange={(e) => setOrderForm({...orderForm, width: e.target.value})}
-                  placeholder="40"
-                />
-              </div>
-              <div>
-                <Label htmlFor="height">Height (in)</Label>
-                <Input
-                  id="height"
-                  value={orderForm.height}
-                  onChange={(e) => setOrderForm({...orderForm, height: e.target.value})}
-                  placeholder="6"
-                />
+              <div className="text-right">
+                <p className="text-sm text-gray-600">Cost Savings</p>
+                <p className="text-2xl font-bold text-green-600">$12,450</p>
               </div>
             </div>
-
-            <div>
-              <Label htmlFor="quantity">Monthly Quantity</Label>
-              <Input
-                id="quantity"
-                value={orderForm.monthlyQuantity}
-                onChange={(e) => setOrderForm({...orderForm, monthlyQuantity: e.target.value})}
-                placeholder="1000"
-              />
-            </div>
-
-            <Button 
-              onClick={handleOrderSubmit} 
-              disabled={loading}
-              className="w-full"
-            >
-              {loading ? (
-                <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <FileText className="h-4 w-4 mr-2" />
-              )}
-              {loading ? 'Processing...' : 'Get Quote'}
-            </Button>
           </div>
         </Card>
       </div>
