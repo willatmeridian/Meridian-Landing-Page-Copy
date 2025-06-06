@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage, type Address } from "./storage";
+import { sendContactEmail } from "./email";
 import fs from "fs";
 import path from "path";
 import csvParser from 'csv-parser';
@@ -167,6 +168,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error importing CSV:", error);
       res.status(500).json({ error: "Failed to import CSV data" });
+    }
+  });
+
+  // API route to handle contact form submissions
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const { name, company, phone, email, description } = req.body;
+
+      // Validate required fields
+      if (!name || !company || !phone || !email || !description) {
+        return res.status(400).json({ error: "All fields are required" });
+      }
+
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({ error: "Invalid email address" });
+      }
+
+      // Send email
+      const emailSent = await sendContactEmail({
+        name,
+        company,
+        phone,
+        email,
+        description
+      });
+
+      if (emailSent) {
+        res.json({ success: true, message: "Contact request submitted successfully" });
+      } else {
+        res.status(500).json({ error: "Failed to send email. Please try again or contact us directly." });
+      }
+    } catch (error) {
+      console.error("Error handling contact form:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 

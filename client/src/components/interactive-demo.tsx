@@ -25,7 +25,7 @@ export default function InteractiveDemo() {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Basic validation
     if (!formData.name || !formData.company || !formData.phone || !formData.email || !formData.description) {
       toast({
@@ -48,21 +48,41 @@ export default function InteractiveDemo() {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Contact Request Submitted!",
+          description: "We'll get back to you within 24 hours to discuss your pallet procurement needs.",
+        });
+        // Reset form
+        setFormData({
+          name: '',
+          company: '',
+          phone: '',
+          email: '',
+          description: ''
+        });
+      } else {
+        throw new Error('Failed to submit contact request');
+      }
+    } catch (error) {
       toast({
-        title: "Contact Request Submitted!",
-        description: "We'll get back to you within 24 hours to discuss your pallet procurement needs.",
+        title: "Submission Failed",
+        description: "Please try again or contact us directly at will@meridianprocure.com",
+        variant: "destructive"
       });
-      // Reset form
-      setFormData({
-        name: '',
-        company: '',
-        phone: '',
-        email: '',
-        description: ''
-      });
-    }, 1000);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -164,9 +184,7 @@ export default function InteractiveDemo() {
               {loading ? "Submitting..." : "Submit Contact Request"}
             </Button>
 
-            <p className="text-sm text-gray-500 text-center">
-              * All fields are required. We'll respond within 24 hours.
-            </p>
+            
           </div>
         </Card>
       </div>
