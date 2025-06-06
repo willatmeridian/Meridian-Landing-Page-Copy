@@ -11,7 +11,7 @@ export default function Hero() {
           <img 
             src={Meridian_Logo_White_Text_Cropped}
             alt="Meridian Logo" 
-            className="h-16 transition-opacity duration-300 hover:opacity-90 mt-[0px] mb-[0px]"
+            className="h-16 transition-opacity duration-300 hover:opacity-90 mt-[20px] mb-[20px]"
           />
           <h1 className="text-4xl md:text-6xl font-bold mb-6 transition-transform duration-300 hover:translate-x-2">
             Your Nationwide Procurement Partner with{" "}
