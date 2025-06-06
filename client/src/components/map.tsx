@@ -176,10 +176,6 @@ export default function Map() {
 
   return (
     <div className="relative h-full w-full">
-      <div 
-        ref={mapRef} 
-        className="h-full w-full rounded-lg overflow-hidden"
-      />
       <div className="absolute top-4 left-4 right-4 md:left-1/2 md:right-auto md:transform md:-translate-x-1/2 flex flex-col gap-2 w-full max-w-lg z-[1000] bg-white/95 backdrop-blur-md p-3 rounded-xl shadow-lg border border-gray-200/50">
         <div className="flex items-center gap-2 mb-2">
           <input
