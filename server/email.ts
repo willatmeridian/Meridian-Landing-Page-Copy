@@ -50,7 +50,7 @@ This email was sent from the Meridian Procurement contact form.
     `.trim();
 
     const msg = {
-      to: 'will@meridianprocure.com',
+      to: 'info@meridianprocure.com',
       from: 'will@meridianprocure.com',
       subject: `New Contact Request from ${formData.name} at ${formData.company}`,
       text: emailContent,
