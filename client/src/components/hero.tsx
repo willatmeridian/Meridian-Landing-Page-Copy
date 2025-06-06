@@ -1,15 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
+import Meridian_Logo_White_Text_Cropped from "@assets/Meridian_Logo_White_Text_Cropped.png";
+
 export default function Hero() {
   return (
     <section className="bg-navy text-white">
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="flex flex-col items-start max-w-3xl">
           <img 
-            src="/meridian-logo.png"
+            src={Meridian_Logo_White_Text_Cropped}
             alt="Meridian Logo" 
-            className="h-16 mb-8 transition-opacity duration-300 hover:opacity-90"
+            className="h-16 transition-opacity duration-300 hover:opacity-90 mt-[0px] mb-[0px]"
           />
           <h1 className="text-4xl md:text-6xl font-bold mb-6 transition-transform duration-300 hover:translate-x-2">
             Your Nationwide Procurement Partner with{" "}
