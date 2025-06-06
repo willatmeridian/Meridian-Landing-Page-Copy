@@ -174,5 +174,44 @@ export default function Map() {
     }
   }, [showResponsiveOnly, palletCompanies, updateVisibleMarkers]);
 
-  return null;
+  return (
+    <div className="w-full">
+      {/* Search Bar */}
+      <div className="mb-4 flex gap-2">
+        <Input
+          type="text"
+          placeholder="Enter an address to search..."
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+          className="flex-1"
+        />
+        <Button onClick={handleSearch} disabled={loading}>
+          {loading ? 'Searching...' : <Search className="h-4 w-4" />}
+        </Button>
+      </div>
+
+      {/* Filter Toggle */}
+      <div className="mb-4">
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={showResponsiveOnly}
+            onChange={(e) => setShowResponsiveOnly(e.target.checked)}
+            className="rounded"
+          />
+          <span className="text-sm text-gray-600">
+            Show only responsive companies ({visibleMarkers.length} of {palletCompanies.length})
+          </span>
+        </label>
+      </div>
+
+      {/* Map Container */}
+      <div
+        ref={mapRef}
+        className="w-full h-96 rounded-lg border border-gray-200"
+        style={{ minHeight: '400px' }}
+      />
+    </div>
+  );
 }
