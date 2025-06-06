@@ -1,12 +1,9 @@
-import { MailService } from '@sendgrid/mail';
+import sgMail from '@sendgrid/mail';
 
 if (!process.env.SENDGRID_API_KEY) {
   console.warn("SENDGRID_API_KEY environment variable is not set. Email functionality will be disabled.");
-}
-
-const mailService = new MailService();
-if (process.env.SENDGRID_API_KEY) {
-  mailService.setApiKey(process.env.SENDGRID_API_KEY);
+} else {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 }
 
 interface ContactFormData {
@@ -39,18 +36,23 @@ ${formData.description}
 This email was sent from the Meridian Procurement contact form.
     `.trim();
 
-    await mailService.send({
+    const msg = {
       to: 'will@meridianprocure.com',
-      from: 'noreply@meridianprocure.com', // This should be a verified sender domain
+      from: 'will@meridianprocure.com',
       subject: `New Contact Request from ${formData.name} at ${formData.company}`,
       text: emailContent,
       html: emailContent.replace(/\n/g, '<br>'),
-      replyTo: formData.email,
-    });
+    };
+
+    const result = await sgMail.send(msg);
+    console.log('Email sent successfully:', result[0].statusCode);
 
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.error('SendGrid email error:', error);
+    if (error.response?.body?.errors) {
+      console.error('SendGrid error details:', error.response.body.errors);
+    }
     return false;
   }
 }
