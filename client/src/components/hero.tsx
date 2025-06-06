@@ -32,7 +32,7 @@ export default function Hero() {
             className="h-12 px-6 text-lg bg-cta hover:bg-cta-light text-navy button-hover"
             onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Try Demo Portal <ArrowRight className="ml-2 transition-transform duration-200 group-hover:translate-x-1" />
+            Get Started <ArrowRight className="ml-2 transition-transform duration-200 group-hover:translate-x-1" />
           </Button>
         </div>
       </div>
