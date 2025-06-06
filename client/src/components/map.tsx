@@ -174,45 +174,5 @@ export default function Map() {
     }
   }, [showResponsiveOnly, palletCompanies, updateVisibleMarkers]);
 
-  return (
-    <div className="relative h-full w-full">
-      <div className="absolute top-4 left-4 right-4 md:left-1/2 md:right-auto md:transform md:-translate-x-1/2 flex flex-col gap-2 w-full max-w-lg z-[1000] bg-white/95 backdrop-blur-md p-3 rounded-xl shadow-lg border border-gray-200/50">
-        <div className="flex items-center gap-2 mb-2">
-          <input
-            type="checkbox"
-            id="responsiveFilter"
-            checked={showResponsiveOnly}
-            onChange={(e) => setShowResponsiveOnly(e.target.checked)}
-            className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-          />
-          <label htmlFor="responsiveFilter" className="text-sm font-medium text-gray-700">
-            Show Responsive Companies Only
-          </label>
-          <span className="ml-auto text-sm text-gray-500">
-            Showing {visibleMarkers.length} locations
-          </span>
-        </div>
-        <div className="flex-1 relative">
-          <Input
-            type="text"
-            placeholder="Enter your facility's address to find local packaging partners"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            className="w-full pr-10 text-sm text-gray-900 placeholder:text-gray-500"
-          />
-          <Button
-            onClick={handleSearch}
-            disabled={loading || !address.trim()}
-            variant="default"
-            size="icon"
-            className="absolute right-0 top-0 bottom-0 rounded-l-none bg-primary hover:bg-primary/90"
-          >
-            <Search className="h-4 w-4" />
-            <span className="sr-only">Search</span>
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+  return null;
 }
