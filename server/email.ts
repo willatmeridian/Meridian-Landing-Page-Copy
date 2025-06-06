@@ -15,7 +15,13 @@ interface ContactFormData {
 }
 
 export async function sendContactEmail(formData: ContactFormData): Promise<boolean> {
-  const emailContent = `
+  if (!process.env.SENDGRID_API_KEY) {
+    console.error('SendGrid API key not configured');
+    return false;
+  }
+
+  try {
+    const emailContent = `
 New Contact Request from Meridian Procurement Website
 
 Name: ${formData.name}
@@ -28,43 +34,25 @@ ${formData.description}
 
 ---
 This email was sent from the Meridian Procurement contact form.
-  `.trim();
+    `.trim();
 
-  // Always log the contact submission to console for backup
-  console.log('\n=== NEW CONTACT FORM SUBMISSION ===');
-  console.log(emailContent);
-  console.log('=====================================\n');
-
-  if (!process.env.SENDGRID_API_KEY) {
-    console.warn('SendGrid API key not configured - contact form logged to console only');
-    return true; // Return true since we logged it
-  }
-
-  try {
-    const fromEmail = process.env.SENDGRID_VERIFIED_SENDER || 'will@meridianprocure.com';
-    
     const msg = {
       to: 'will@meridianprocure.com',
-      from: fromEmail,
+      from: 'will@meridianprocure.com',
       subject: `New Contact Request from ${formData.name} at ${formData.company}`,
       text: emailContent,
       html: emailContent.replace(/\n/g, '<br>'),
     };
 
     const result = await sgMail.send(msg);
-    console.log('Email sent successfully via SendGrid:', result[0].statusCode);
+    console.log('Email sent successfully:', result[0].statusCode);
+
     return true;
   } catch (error: any) {
-    console.error('SendGrid email failed, but contact form was logged to console');
-    
+    console.error('SendGrid email error:', error);
     if (error.response?.body?.errors) {
-      console.error('SendGrid setup needed:', error.response.body.errors);
-      console.log('To fix email delivery:');
-      console.log('1. Verify will@meridianprocure.com as a sender in SendGrid');
-      console.log('2. Or set SENDGRID_VERIFIED_SENDER environment variable to a verified email');
+      console.error('SendGrid error details:', error.response.body.errors);
     }
-    
-    // Return true since we logged the submission
-    return true;
+    return false;
   }
 }
