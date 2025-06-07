@@ -176,7 +176,7 @@ export default function InteractiveDemo() {
             </div>
 
             <Button 
-              className="w-full button-hover py-3 text-lg" 
+              className="w-full button-hover py-3 text-lg text-[#ffffff]" 
               disabled={loading}
               onClick={handleSubmit}
             >
